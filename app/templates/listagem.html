@@ -63,19 +63,12 @@
                             <td nowrap="true">
                                 <a href="/selecao/{{pessoa.id}}">{{pessoa.id}}</a>
                             </td>
-                            <td nowrap="true">{{pessoa.nome}}</td>
-                            <td nowrap="true">{{pessoa.idade}}</td>
-                            <td nowrap="true">{{pessoa.sexo}}</td>
-                            <td nowrap="true">{{pessoa.salario}}</td>
+                            <td nowrap="true">{{pessoa.address}}</td>
+                            <td nowrap="true">{{pessoa.name}}</td>
+                            <td nowrap="true">{{pessoa.city}}</td>
+                            <td nowrap="true">{{pessoa.country}}</td>
                             <td>
-                                <a href="/edicao/{{pessoa.id}}"
-                                class="btn btn-primary" role="button">
-                                    Editar
-                                </a>
-                                <a href="/delecao/{{pessoa.id}}"
-                                class="btn btn-danger" role="button">
-                                    DELETAR
-                                </a>
+                              
                             </td>
                         </tr>
                     {% endfor %}

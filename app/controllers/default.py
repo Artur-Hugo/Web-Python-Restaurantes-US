@@ -3,7 +3,7 @@ from flask.helpers import send_file
 from app import app, db
 from flask_mysqldb import MySQL
 from app.models.tables import Pessoa
-
+import folium
 
 
 app.debug = True
@@ -24,7 +24,7 @@ def listagem():
     cur = mysql.connection.cursor()
 
     #get articles
-    result = cur.execute("SELECT * FROM pessoas")
+    result = cur.execute("SELECT * FROM fast_food_restaurants_us")
 
     pessoas = cur.fetchall()
 
@@ -48,55 +48,6 @@ def selecao(id=0):
     
     return render_template('listagem.html', pessoas=pessoas)
 
-@app.route('/ordenacao/<campo>/<ordem_anterior>')
-def ordenacao(campo='id', ordem_anterior=''):
-    if campo == 'id':
-        if ordem_anterior == campo:
-            pessoas = Pessoa.query.order_by(Pessoa.id.desc()).all()
-        else:
-            pessoas = Pessoa.query.order_by(Pessoa.id).all()
-    elif campo == 'nome':
-        if ordem_anterior == campo:
-            pessoas = Pessoa.query.order_by(Pessoa.nome.desc()).all()
-        else:
-            pessoas = Pessoa.query.order_by(Pessoa.nome).all()
-    elif campo == 'idade':
-        if ordem_anterior == campo:
-            pessoas = Pessoa.query.order_by(Pessoa.idade.desc()).all()
-        else:
-            pessoas = Pessoa.query.order_by(Pessoa.idade).all()
-    elif campo == 'sexo':
-        if ordem_anterior == campo:
-            pessoas = Pessoa.query.order_by(Pessoa.sexo.desc()).all()
-        else:
-            pessoas = Pessoa.query.order_by(Pessoa.sexo).all()
-    elif campo == 'salario':
-        if ordem_anterior == campo:
-            pessoas = Pessoa.query.order_by(Pessoa.sexo.desc()).all()
-        else:
-            pessoas = Pessoa.query.order_by(Pessoa.sexo.all())
-    else:
-        pessoas = Pessoa.query.order_by(Pessoa.id).all()
-        
-    return render_template('listagem.html', pessoas=pessoas, ordem=campo)
-
-@app.route('/consulta', methods=['POST'])
-def consulta():
-    consulta = '%'+request.form.get('consulta')+'%'
-    campo = request.form.get('campo')
-
-    if campo == 'nome':
-        pessoas = Pessoa.query.filter(Pessoa.nome.like(consulta)).all()
-    elif campo == 'idade':
-        pessoas = Pessoa.query.filter(Pessoa.idade.like(consulta)).all()
-    elif campo == 'sexo':
-        pessoas = Pessoa.query.filter(Pessoa.sexo.like(consulta)).all()
-    elif campo == 'salario':
-        pessoas = Pessoa.query.filter(Pessoa.salario.like(consulta)).all()
-    else:
-        pessoas = Pessoa.query.all()
-
-    return render_template('listagem.html', pessoas=pessoas, ordem='id')
 
 
 @app.route('/insercao')
@@ -126,9 +77,83 @@ def salvar_insercao():
     pessoas = cur.fetchone()
     cur.close()
 
-
     
 
-    
     return render_template('insercao.html', pessoas=pessoas)
 
+
+@app.route('/graficos')
+def graficos():
+    #create cursor
+    cur = mysql.connection.cursor()
+
+    #get articles
+    result = cur.execute("SELECT * FROM fast_food_restaurants_us ")
+
+    lojas = cur.fetchall()
+    return render_template('graficos.html', lojas=lojas)
+
+@app.route('/mapa')
+def make_chicago_map():
+
+    cur = mysql.connection.cursor()
+
+    #get article
+    result1 = cur.execute("SELECT latitude FROM comercio_food where codigo  <= 4 ")
+    
+    result1 = cur.fetchone()
+
+    resultudo = cur.fetchall()
+
+    listByAge = [3]
+    lista = []
+
+
+    #Percorre a variavel do select e adiciona ao vetor lista
+    for linha in resultudo:
+        lista.append(linha)
+        print("latitude:", linha )
+    
+    print(lista)
+
+    #Maneira de eliminar a chave e obter o valor
+    row = [listaq['latitude'] for listaq in lista]
+    
+    print(row)
+
+
+
+        
+    result = cur.execute("SELECT longitude FROM comercio_food where codigo = 2 ")
+    
+
+    result2 = cur.fetchone()
+
+    
+    print("VAlor> ")
+    
+
+    #pegar o valor key e value quando coloca fetchone()
+    for k, v in result2.items():
+        result2[k] = float(v)
+        
+    
+    
+    result = v
+    result1 = 35.803788
+    result = -83.580553
+   
+    
+    folium_map = folium.Map(location=[result1, result],
+                            zoom_start=14,
+                            tiles="cartodbpositron",
+                            width='75%', 
+                            height='75%')
+    folium.Marker(
+    [result1, result], popup="<i>Mt. Hood Meadows</i>"
+    ).add_to(folium_map)
+    folium.Marker(
+    [35.782339, -83.551408], popup="<b>Timberline Lodge</b>"
+    ).add_to(folium_map)
+    folium_map.save('app/templates/mapa.html')
+    return render_template('mapa.html')

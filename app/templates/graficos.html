@@ -1,82 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<meta http-equiv='cache-control' content='no-cache'>
-	<meta http-equiv='expires' content='0'>
-	<meta http-equiv='pragma' content='no-cache'>
-	<title>Gráficos</title>
+<div style="margin-top: 35px;"></div>
+<!-- MAPA -->
+              
+<script src='http://maps.google.com/maps/api/js?key=AIzaSyDv7YRz1WWPhkr6aim8wEm4WDPBdk81z54'></script>
 
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
-<body>
-	<nav class="navbar navbar-expand-sm bg-dark">
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="/listagem">LISTAGEM</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/insercao">NOVO</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/graficos">GRAFICOS</a>
-			</li>
-		</ul>
-	</nav>
-	<br>
-	<div class="container">
-		<h2>Gráficos</h2>
-		<input type="hidden" id="salarioM" value="{{salarioM}}">
-		<input type="hidden" id="salarioF" value="{{salarioF}}">
-		<input type="hidden" id="idadeM" value="{{idadeM}}">
-		<input type="hidden" id="idadeF" value="{{idadeF}}">
-		<button type="button" class="btn btn-sm btn-primary" onclick="plot('bar')">
-			Faixa Etária
-		</button>
-		<button type="button" class="btn btn-sm btn-primary" onclick="plot('pie')">
-			Média Salarial
-		</button>
-		<br>
-		<br>
-		<center>
-			<div id="grafico" style="width: 800px; height: 400px;"></div>
-		</center>
-	</div>
-	<script>
-		function plot(type='bar') {
-			type = type.toString().toLowerCase().trim();
+<div style='overflow:hidden;height:780px;width:100%;color: #0095eb'>
+    <div id='gmap_canvas' style='height:880px;width:100%;'></div>
+     <style>#gmap_canvas img{max-width:none!important;background:none!important}.gm-ui-hover-effect{
+    display: none!important;}</style>
+   </div>
 
-			const salarioM = Number(document.getElementById('salarioM').value.replace(',', '.'));
-			const salarioF = Number(document.getElementById('salarioF').value.replace(',', '.'));
+       <!-- Alterar apenas Aqui -->
+       <script type='text/javascript'>
+        function init_map(){var myOptions = {zoom:13,center:new google.maps.LatLng(29.814697,-90.814742),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(29.814697,-90.814742)});infowindow = new google.maps.InfoWindow({content:'<strong> MINHA EMPRESA </strong><br> MEU ENDEREÇO <br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+        function init_map(){var myOptions = {zoom:13,center:new google.maps.LatLng(35.803788,-83.580553),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(35.803788,-83.580553)});infowindow = new google.maps.InfoWindow({content:'<strong> MINHA EMPRESA </strong><br> MEU ENDEREÇO <br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+        function init_map(){var myOptions = {zoom:13,center:new google.maps.LatLng(35.803788,-83.580553),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(35.803790,-83.580553)});infowindow = new google.maps.InfoWindow({content:'<strong> MINHA EMPRESA </strong><br> MEU ENDEREÇO <br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+		</script>
+        <!-- Alterar apenas Aqui -->
 
-			const idadeM = Number(document.getElementById('idadeM').value.replace(',', '.'));
-			const idadeF = Number(document.getElementById('idadeF').value.replace(',', '.'));
-
-			let serie = {};
-			if(type=='pie') {
-				serie = {
-					values: [salarioM, salarioF],
-					labels: ['Masculino', 'Feminino'],
-					type: type
-				};
-			}else {
-				serie = {
-					x: ['Masculino', 'Feminino'],
-					y: [idadeM, idadeF],
-					type: type
-				};				
-			}
-
-			const data = [serie];
-			Plotly.newPlot('grafico', data);			
-		}
-
-		plot();
-	</script>
-</body>
-</html>
+<!-- MAPA -->
