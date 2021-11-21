@@ -1,19 +1,11 @@
-from app import db
+from flask_mysqldb import MySQL
+from app import app
+from wtforms import Form, StringField , IntegerField, FloatField, validators
 
-class Pessoa(db.Model):
-    __tablename__ = 'pessoas'
 
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    idade = db.Column(db.Integer)
-    sexo = db.Column(db.String(1))
-    salario = db.Column(db.Float)
 
-    def __init__(self, nome='Anônimo', idade=18, sexo='M', salario=1.039):
-        self.nome = nome
-        self.idade = idade
-        self.sexo = sexo
-        self.salario = salario
-    
-    def __repr__(self):
-        return '<Pessoa %r>' % self.nome
+class Pessoa(Form):
+    nome = StringField('nome',[validators.Length(min=1,max=50)])
+    idade = IntegerField('idade')
+    sexo = StringField('sexo',[validators.Length(min=1,max=1)])
+    salario = FloatField('salario')
