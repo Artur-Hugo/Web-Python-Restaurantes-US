@@ -71,7 +71,7 @@ def salvar_insercao():
     #get articles
     cur.execute("INSERT INTO pessoas(nome, idade, sexo, salario) VALUES(%s,%s,%s,%s)",(Nome, Idade, Sexo, Salario))
 
-# commit to DB
+    # commit to DB
     mysql.connection.commit()
     #close connection
     pessoas = cur.fetchone()
@@ -98,48 +98,89 @@ def make_chicago_map():
 
     cur = mysql.connection.cursor()
 
-    #get article
-    result1 = cur.execute("SELECT latitude FROM comercio_food where codigo  <= 4 ")
+    ####OBTER VALOR LATITUDE
+    #get latitude
+    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo  <= 4 ")
+
+    resultlati = cur.fetchall()
+
+    listaLati = []
+
+             #Percorre a variavel do select e adiciona ao vetor lista
+
+     #Percorre a lista de Latitude
+    for linha in resultlati:
+        listaLati.append(linha)
+    print(listaLati)
+
+
+
+    #####OBTER VALOR LONGITUDE
+     #Lista de longitude
+    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo  <= 4 ")
+
+    resultlong = cur.fetchall()
+
+    #Listas que será usado no mapa
     
-    result1 = cur.fetchone()
+    listaLongi = []
 
-    resultudo = cur.fetchall()
+         #Percorre a variavel do select e adiciona ao vetor lista
 
-    listByAge = [3]
-    lista = []
+    #Percorre a lista de Longitude
+    for linha in resultlong:
+        listaLongi.append(linha)
+    print("Longitude: ")
+    print(listaLongi)        
+    print(type(listaLongi))
 
-
-    #Percorre a variavel do select e adiciona ao vetor lista
-    for linha in resultudo:
-        lista.append(linha)
-        print("latitude:", linha )
-    
-    print(lista)
-
-    #Maneira de eliminar a chave e obter o valor
-    row = [listaq['latitude'] for listaq in lista]
-    
-    print(row)
-
-
-
-        
-    result = cur.execute("SELECT longitude FROM comercio_food where codigo = 2 ")
-    
-
-    result2 = cur.fetchone()
 
     
-    print("VAlor> ")
+    #Lista nome do Restaurante
+    resultname = cur.execute("SELECT name FROM comercio_food where codigo  <= 4 ")
+   
+    resultname = cur.fetchall()
+
+    listaNome = []
+
+        #Percorre a variavel do select e adiciona ao vetor lista
+
+    #Percorre a lista de nomes
+    for linha in resultname:
+        listaNome.append(linha)
+    print(listaNome)
+
+   
+
+    ####################################################
     
 
-    #pegar o valor key e value quando coloca fetchone()
-    for k, v in result2.items():
-        result2[k] = float(v)
-        
+        #Maneira de eliminar a chave e obter o valor
+    #obter o valor da Longitude
+    listaLongi = [listaq['longitude'] for listaq in listaLongi]
+    print("Longitude: ")
+    print(listaLongi)
+
+    #obter valor da Latitude
+    listaLati = [listaq['latitude'] for listaq in listaLati]
+    print("Latitude: ")
+    print(listaLati)
     
+    listaNome = [listaq['name'] for listaq in listaNome]
+    print("Nome: ")
+    print(listaNome)
+  
     
-    result = v
+
+    #######################################################
+
+
+    pessoa1 = Loujas("João", "M", "123456")
+
+    print(pessoa1.nome)
+
+    
+    ###Teste
     result1 = 35.803788
     result = -83.580553
    
@@ -155,5 +196,27 @@ def make_chicago_map():
     folium.Marker(
     [35.782339, -83.551408], popup="<b>Timberline Lodge</b>"
     ).add_to(folium_map)
+
+
+    for name in listaNome:
+        print(name)
+
+    
+
+    for lati in listaLati:
+        for longi in listaLongi:
+                for name in listaNome:
+                    folium.Marker(
+                    [lati, longi], popup =  [lati,longi]
+                    ).add_to(folium_map)
+
+
+
     folium_map.save('app/templates/mapa.html')
     return render_template('mapa.html')
+
+class Loujas:
+    def __init__(self, nome, sexo, cpf):
+        self.nome = nome
+        self.sexo = sexo
+        self.cpf = cpf

@@ -41,3 +41,11 @@ try:
 except Error as e:
             print("Error while connecting to MySQL", e)
 """
+
+
+----------------------------------------------------------
+  #pegar o valor key e value quando coloca fetchone()
+    for k, v in result2.items():
+        result2[k] = float(v)
+        
+    
