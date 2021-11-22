@@ -172,18 +172,31 @@ def make_chicago_map():
   
     
 
-    #######################################################
+    ####################################################### "NOja1:"
 
 
-    pessoa1 = Loujas("João", "M", "123456")
+    #teste#print("NOja1:" + listaNome[1])
 
-    print(pessoa1.nome)
+    contador = -1
+    for n in listaNome:
+        contador += 1
+        loja1 = Lojas(listaNome[contador],listaLati[contador],listaLongi[contador])
 
+
+    
     
     ###Teste
     result1 = 35.803788
     result = -83.580553
    
+
+   ###############################################
+
+
+
+   ################################################
+
+
     
     folium_map = folium.Map(location=[result1, result],
                             zoom_start=14,
@@ -198,25 +211,22 @@ def make_chicago_map():
     ).add_to(folium_map)
 
 
-    for name in listaNome:
-        print(name)
-
     
 
-    for lati in listaLati:
-        for longi in listaLongi:
-                for name in listaNome:
-                    folium.Marker(
-                    [lati, longi], popup =  [lati,longi]
-                    ).add_to(folium_map)
+    contador = -1
+    for i in listaLongi:
+        contador += 1
+        folium.Marker(
+        [listaLati[contador], listaLongi[contador] ], popup = listaNome[contador]
+        ).add_to(folium_map)
 
 
 
     folium_map.save('app/templates/mapa.html')
     return render_template('mapa.html')
 
-class Loujas:
-    def __init__(self, nome, sexo, cpf):
+class Lojas:
+    def __init__(self, nome, latitude, longitude):
         self.nome = nome
-        self.sexo = sexo
-        self.cpf = cpf
+        self.latitude = latitude
+        self.longitude = longitude
