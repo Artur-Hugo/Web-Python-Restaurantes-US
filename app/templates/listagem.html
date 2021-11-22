@@ -24,23 +24,23 @@
                 <a class="nav-link" href="/insercao">NOVO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/graficos">GRAFICOS</a>
+                <a class="nav-link" href="/mapa">MAPA</a>
             </li>
         </ul>
     </nav>  
     <br>
     <div class="container">
         <h2>Listagem</h2>
-        <form action="/consulta" method="POST" name="frm_consulta" class="ml-3">
+        <form action="/consultar" method="POST" name="frm_consulta" class="ml-3">
             <div class="form-group">
                 <div class="row">
                     <input type="text" class="form-control col-md-5" name="consulta"
                     placeholder="Digite aqui a sua consulta">
                     <select class="form-control col-md-2" name="campo">
-                        <option value="nome">Nome</option>
-                        <option value="idade">Idade</option>
-                        <option value="sexo">Sexo</option>
-                        <option value="salario">Salário</option>
+                        <option value="name">Nome</option>
+                        <option value="address">Address</option>
+                        <option value="city">City</option>
+                        <option value="province">Province</option>
                     </select>
                     <button type="submit" class="btn btn-success ml-4">Consultar</button>
                 </div>
@@ -50,18 +50,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><a href="/ordenacao/id/{{ordem}}">ID</a></th>
+                        <th><a href="/ordenacao/salario/{{ordem}}">id</a></th>
+                        <th><a href="/ordenacao/id/{{ordem}}">Address</a></th>
                         <th><a href="/ordenacao/nome/{{ordem}}">Nome</a></th>
-                        <th><a href="/ordenacao/idade/{{ordem}}">Idade</a></th>
-                        <th><a href="/ordenacao/sexo/{{ordem}}">Sexo</a></th>
-                        <th><a href="/ordenacao/salario/{{ordem}}">Salário</a></th>
+                        <th><a href="/ordenacao/idade/{{ordem}}">Cidade</a></th>
+                        <th><a href="/ordenacao/sexo/{{ordem}}">País</a></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {% for pessoa in pessoas %}
                         <tr>
                             <td nowrap="true">
-                                <a href="/selecao/{{pessoa.id}}">{{pessoa.id}}</a>
+                                <a href="/selecao/{{pessoa.id}}">{{pessoa.codigo}}</a>
                             </td>
                             <td nowrap="true">{{pessoa.address}}</td>
                             <td nowrap="true">{{pessoa.name}}</td>

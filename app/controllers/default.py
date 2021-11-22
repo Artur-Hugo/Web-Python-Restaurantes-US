@@ -24,7 +24,7 @@ def listagem():
     cur = mysql.connection.cursor()
 
     #get articles
-    result = cur.execute("SELECT * FROM fast_food_restaurants_us")
+    result = cur.execute("SELECT * FROM comercio_food")
 
     pessoas = cur.fetchall()
 
@@ -48,11 +48,37 @@ def selecao(id=0):
     
     return render_template('listagem.html', pessoas=pessoas)
 
+@app.route('/consultar' , methods=['POST'])
+def consulta():
+    consulta = '%'+request.form.get('consulta')+'%'
+    print(consulta)
+    campo = request.form.get('campo')
+
+    cur = mysql.connection.cursor()
+
+    if campo == 'name':
+        result = cur.execute("select * from comercio_food where name like %s",[consulta])
+        result = cur.fetchall()
+    elif campo == 'address':
+        result = cur.execute("select * from comercio_food where address like '%s%'",[consulta])
+        result = cur.cur.fetchall()
+    elif campo == 'city':
+        result = cur.execute("select * from comercio_food where city like '%s%'",[consulta])
+        result = cur.fetchall()
+    elif campo == 'province':
+        result = cur.execute("select * from comercio_food where province like '%s%'",[consulta])
+        result = cur.fetchall()
+    else:
+        result = cur.execute("SELECT * FROM comercio_food")
+
+    return render_template('listagem.html', pessoas=result)
+
 
 
 @app.route('/insercao')
 def insercao():
     return render_template('insercao.html')
+
 
 @app.route('/salvar_insercao', methods=['POST'])
 
@@ -100,7 +126,7 @@ def make_chicago_map():
 
     ####OBTER VALOR LATITUDE
     #get latitude
-    resultlati = cur.execute("SELECT latitude FROM comercio_food")
+    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo <= 5000")
 
     resultlati = cur.fetchall()
 
@@ -117,7 +143,7 @@ def make_chicago_map():
 
     #####OBTER VALOR LONGITUDE
      #Lista de longitude
-    resultlong = cur.execute("SELECT longitude FROM comercio_food")
+    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo <= 5000")
 
     resultlong = cur.fetchall()
 
@@ -135,7 +161,7 @@ def make_chicago_map():
 
     
     #Lista nome do Restaurante
-    resultname = cur.execute("SELECT name FROM comercio_food")
+    resultname = cur.execute("SELECT name FROM comercio_food where codigo <= 5000")
    
     resultname = cur.fetchall()
 
@@ -194,7 +220,7 @@ def make_chicago_map():
 
     
     folium_map = folium.Map(location=[result1, result],
-                            zoom_start=14,
+                            zoom_start=5,
                             tiles="cartodbpositron",
                             width='75%', 
                             height='75%')
