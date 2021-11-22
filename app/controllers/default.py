@@ -100,7 +100,7 @@ def make_chicago_map():
 
     ####OBTER VALOR LATITUDE
     #get latitude
-    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo  <= 4 ")
+    resultlati = cur.execute("SELECT latitude FROM comercio_food")
 
     resultlati = cur.fetchall()
 
@@ -111,13 +111,13 @@ def make_chicago_map():
      #Percorre a lista de Latitude
     for linha in resultlati:
         listaLati.append(linha)
-    print(listaLati)
+    
 
 
 
     #####OBTER VALOR LONGITUDE
      #Lista de longitude
-    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo  <= 4 ")
+    resultlong = cur.execute("SELECT longitude FROM comercio_food")
 
     resultlong = cur.fetchall()
 
@@ -130,14 +130,12 @@ def make_chicago_map():
     #Percorre a lista de Longitude
     for linha in resultlong:
         listaLongi.append(linha)
-    print("Longitude: ")
-    print(listaLongi)        
-    print(type(listaLongi))
+  
 
 
     
     #Lista nome do Restaurante
-    resultname = cur.execute("SELECT name FROM comercio_food where codigo  <= 4 ")
+    resultname = cur.execute("SELECT name FROM comercio_food")
    
     resultname = cur.fetchall()
 
@@ -148,7 +146,7 @@ def make_chicago_map():
     #Percorre a lista de nomes
     for linha in resultname:
         listaNome.append(linha)
-    print(listaNome)
+   
 
    
 
@@ -158,17 +156,14 @@ def make_chicago_map():
         #Maneira de eliminar a chave e obter o valor
     #obter o valor da Longitude
     listaLongi = [listaq['longitude'] for listaq in listaLongi]
-    print("Longitude: ")
-    print(listaLongi)
+   
 
     #obter valor da Latitude
     listaLati = [listaq['latitude'] for listaq in listaLati]
-    print("Latitude: ")
-    print(listaLati)
+   
     
     listaNome = [listaq['name'] for listaq in listaNome]
-    print("Nome: ")
-    print(listaNome)
+    
   
     
 
