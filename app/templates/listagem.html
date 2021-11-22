@@ -54,20 +54,22 @@
                         <th><a href="/ordenacao/id/{{ordem}}">Address</a></th>
                         <th><a href="/ordenacao/nome/{{ordem}}">Nome</a></th>
                         <th><a href="/ordenacao/idade/{{ordem}}">Cidade</a></th>
+                        <th><a href="/ordenacao/idade/{{ordem}}">Estado</a></th>
                         <th><a href="/ordenacao/sexo/{{ordem}}">País</a></th>
                         
                     </tr>
                 </thead>
                 <tbody>
-                    {% for pessoa in pessoas %}
+                    {% for comercio in restaurants %}
                         <tr>
                             <td nowrap="true">
-                                <a href="/selecao/{{pessoa.id}}">{{pessoa.codigo}}</a>
+                                <a href="/selecao/{{comercio.id}}">{{comercio.codigo}}</a>
                             </td>
-                            <td nowrap="true">{{pessoa.address}}</td>
-                            <td nowrap="true">{{pessoa.name}}</td>
-                            <td nowrap="true">{{pessoa.city}}</td>
-                            <td nowrap="true">{{pessoa.country}}</td>
+                            <td nowrap="true">{{comercio.address}}</td>
+                            <td nowrap="true">{{comercio.name}}</td>
+                            <td nowrap="true">{{comercio.city}}</td>
+                            <td nowrap="true">{{comercio.province}}</td>
+                            <td nowrap="true">{{comercio.country}}</td>
                             <td>
                               
                             </td>
@@ -78,8 +80,8 @@
         </div>
         <a href="#" style="float: right;" onclick="relatorio()">Imprimir Relatório</a>
         <textarea id="dados" style="display: none;">
-            {% for pessoa in pessoas %}
-                {{pessoa.nome}}|{{pessoa.idade}}|{{pessoa.sexo}}|{{pessoa.salario}}#
+            {% for comercio in restaurants %}
+                {{comercio.nome}}|{{comercio.idade}}|{{comercio.sexo}}|{{comercio.salario}}#
             {% endfor %}
         </textarea>
         <script>

@@ -26,10 +26,10 @@ def listagem():
     #get articles
     result = cur.execute("SELECT * FROM comercio_food")
 
-    pessoas = cur.fetchall()
+    conteudo = cur.fetchall()
 
     
-    return render_template('listagem.html',pessoas=pessoas)
+    return render_template('listagem.html',restaurants=conteudo)
     
 
 
@@ -42,11 +42,11 @@ def selecao(id=0):
     #get article
     result = cur.execute("SELECT * FROM pessoas WHERE id = %s",[id])
 
-    pessoas = cur.fetchone()
+    conteudo = cur.fetchone()
 
 
     
-    return render_template('listagem.html', pessoas=pessoas)
+    return render_template('listagem.html', restaurants=conteudo)
 
 @app.route('/consultar' , methods=['POST'])
 def consulta():
@@ -60,18 +60,18 @@ def consulta():
         result = cur.execute("select * from comercio_food where name like %s",[consulta])
         result = cur.fetchall()
     elif campo == 'address':
-        result = cur.execute("select * from comercio_food where address like '%s%'",[consulta])
+        result = cur.execute("select * from comercio_food where address like %s",[consulta])
         result = cur.cur.fetchall()
     elif campo == 'city':
-        result = cur.execute("select * from comercio_food where city like '%s%'",[consulta])
+        result = cur.execute("select * from comercio_food where city like %s",[consulta])
         result = cur.fetchall()
     elif campo == 'province':
-        result = cur.execute("select * from comercio_food where province like '%s%'",[consulta])
+        result = cur.execute("select * from comercio_food where province like %s",[consulta])
         result = cur.fetchall()
     else:
         result = cur.execute("SELECT * FROM comercio_food")
 
-    return render_template('listagem.html', pessoas=result)
+    return render_template('listagem.html', restaurants=result)
 
 
 
@@ -100,12 +100,12 @@ def salvar_insercao():
     # commit to DB
     mysql.connection.commit()
     #close connection
-    pessoas = cur.fetchone()
+    conteudo = cur.fetchone()
     cur.close()
 
     
 
-    return render_template('insercao.html', pessoas=pessoas)
+    return render_template('insercao.html', restaurants=conteudo)
 
 
 @app.route('/graficos')
