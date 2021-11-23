@@ -17,11 +17,15 @@ app.config['MYSQL_DB'] = 'restaurante'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 @app.route('/')
-@app.route('/listagem')
+@app.route('/listagem', methods=['GET'])
 def listagem():
     
-     #create cursor
+    #create cursor
     cur = mysql.connection.cursor()
+
+    cur.execute("select distinct province from comercio_food")
+
+    conteudoProvince = cur.fetchall()
 
     #get articles
     result = cur.execute("SELECT * FROM comercio_food")
@@ -29,8 +33,9 @@ def listagem():
     conteudo = cur.fetchall()
 
     
-    return render_template('listagem.html',restaurants=conteudo)
-    
+    return render_template('listagem.html',restaurants=conteudo, province=conteudoProvince)
+
+
 
 
     
@@ -51,7 +56,7 @@ def selecao(id=0):
 @app.route('/consultar' , methods=['POST'])
 def consulta():
     consulta = '%'+request.form.get('consulta')+'%'
-    print(consulta)
+    
     campo = request.form.get('campo')
 
     cur = mysql.connection.cursor()
@@ -70,6 +75,7 @@ def consulta():
         result = cur.fetchall()
     else:
         result = cur.execute("SELECT * FROM comercio_food")
+    
 
     return render_template('listagem.html', restaurants=result)
 
@@ -119,14 +125,31 @@ def graficos():
     lojas = cur.fetchall()
     return render_template('graficos.html', lojas=lojas)
 
-@app.route('/mapa')
-def make_chicago_map():
+@app.route('/listagem' , methods=['POST'])
+def make_province_map():
 
+     #create cursor
+    cur = mysql.connection.cursor()
+
+    cur.execute("select distinct province from comercio_food order by province")
+
+    conteudoProvince = cur.fetchall()
+
+    #get articles
+    result = cur.execute("SELECT * FROM comercio_food")
+
+    conteudo = cur.fetchall()
+
+
+    listagem()
+    estado = request.form.get('province11')
+    print("Estado: ")
+    print(estado)
     cur = mysql.connection.cursor()
 
     ####OBTER VALOR LATITUDE
     #get latitude
-    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo <= 5000")
+    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo <= 5000 and province like %s",[estado])
 
     resultlati = cur.fetchall()
 
@@ -143,7 +166,7 @@ def make_chicago_map():
 
     #####OBTER VALOR LONGITUDE
      #Lista de longitude
-    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo <= 5000")
+    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo <= 5000 and province like %s",[estado])
 
     resultlong = cur.fetchall()
 
@@ -161,7 +184,7 @@ def make_chicago_map():
 
     
     #Lista nome do Restaurante
-    resultname = cur.execute("SELECT name FROM comercio_food where codigo <= 5000")
+    resultname = cur.execute("SELECT name FROM comercio_food where codigo <= 5000 and province like %s",[estado])
    
     resultname = cur.fetchall()
 
@@ -197,11 +220,11 @@ def make_chicago_map():
 
 
     #teste#print("NOja1:" + listaNome[1])
-
-    contador = -1
-    for n in listaNome:
-        contador += 1
-        loja1 = Lojas(listaNome[contador],listaLati[contador],listaLongi[contador])
+    ####teste que não deu certo
+    ##contador = -1
+    ##for n in listaNome:
+    ##    contador += 1
+    ##    loja1 = Lojas(listaNome[contador],listaLati[contador],listaLongi[contador])
 
 
     
@@ -223,7 +246,11 @@ def make_chicago_map():
                             zoom_start=5,
                             tiles="cartodbpositron",
                             width='75%', 
-                            height='75%')
+                            height='75%',
+                            position='relative',
+                            left='12.5%' 
+                            
+                            )
     folium.Marker(
     [result1, result], popup="<i>Mt. Hood Meadows</i>"
     ).add_to(folium_map)
@@ -244,10 +271,15 @@ def make_chicago_map():
 
 
     folium_map.save('app/templates/mapa.html')
-    return render_template('mapa.html')
+    
+    return render_template('listagem.html', estado=estado,restaurants=conteudo, province=conteudoProvince)
+
+
+
 
 class Lojas:
     def __init__(self, nome, latitude, longitude):
         self.nome = nome
         self.latitude = latitude
         self.longitude = longitude
+

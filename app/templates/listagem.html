@@ -29,6 +29,32 @@
         </ul>
     </nav>  
     <br>
+
+    <div class="container" style="align-content: center;">
+        <h2>Pesquisar Loja por Província</h2>
+            <form action="/listagem" (click)="listagem()" value="" method="POST" name="frm_province" class="ml-3">
+                <div class="form-group" style="align-content: center;">
+                    <div class="row">
+
+                            
+                        
+                            <select class="form-control col-md-2" name="province11">
+                                
+                                {% for comercioProvincia in province %}
+                                    <option nowrap="true" >{{comercioProvincia.province}}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-success ml-4">Consultar</button>
+                    </div>
+                </div>
+            </form>
+            <br><h4 style="text-align: center;">Pesquisa dos comercios na Provincia de : {{estado}}</h4><br>
+    </div>
+    {% include 'mapa.html' %}
+    
+   
+
+
     <div class="container">
         <h2>Listagem</h2>
         <form action="/consultar" method="POST" name="frm_consulta" class="ml-3">
@@ -50,12 +76,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><a href="/ordenacao/salario/{{ordem}}">id</a></th>
-                        <th><a href="/ordenacao/id/{{ordem}}">Address</a></th>
-                        <th><a href="/ordenacao/nome/{{ordem}}">Nome</a></th>
-                        <th><a href="/ordenacao/idade/{{ordem}}">Cidade</a></th>
-                        <th><a href="/ordenacao/idade/{{ordem}}">Estado</a></th>
-                        <th><a href="/ordenacao/sexo/{{ordem}}">País</a></th>
+                        <th><a href="#">id</a></th>
+                        <th><a href="#">Address</a></th>
+                        <th><a href="#">Nome</a></th>
+                        <th><a href="#">Cidade</a></th>
+                        <th><a href="#">Estado</a></th>
+                        <th><a href="#">País</a></th>
                         
                     </tr>
                 </thead>
@@ -78,36 +104,7 @@
                 </tbody>
             </table>
         </div>
-        <a href="#" style="float: right;" onclick="relatorio()">Imprimir Relatório</a>
-        <textarea id="dados" style="display: none;">
-            {% for comercio in restaurants %}
-                {{comercio.nome}}|{{comercio.idade}}|{{comercio.sexo}}|{{comercio.salario}}#
-            {% endfor %}
-        </textarea>
-        <script>
-            function relatorio() {
-                const doc = new jsPDF({orientation: 'landscape'});
-
-                const texto = document.getElementById('dados').innerText;
-                const arrLinhas = texto.split('#');
-                let conteudo = 'RELATÓRIO DE PESSOAS\n\n';
-                for(let linha=0; linha<arrLinhas.length; linha++){
-                    let arrColunas = arrLinhas[linha].split('|');
-                    arrColunas[0] = arrColunas[0].trim().padEnd(35, '*');
-                    if(arrColunas[0].indexOf('*') > 0){
-                        conteudo += `NOME: ${arrColunas[0]} - `+
-                                    `IDADE: ${arrColunas[1]} - `+
-                                    `SEXO: ${arrColunas[2]} - `+
-                                    `SALÁRIO: R$ ${arrColunas[3]}\n`;
-                    }
-                }
-
-                doc.setFontSize(12);
-                doc.setFont('Courier');
-                doc.text(conteudo, 30, 30);
-                doc.save('relatorio.pdf');
-            }
-        </script>
+       
     </div>
 </body>
 </html>
