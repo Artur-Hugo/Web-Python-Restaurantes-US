@@ -125,6 +125,65 @@ def graficos():
     lojas = cur.fetchall()
     return render_template('graficos.html', lojas=lojas)
 
+
+@app.route('/Pesquisar/<int:codigo>')
+def delecao(codigo=0):
+    pesquisa = request.form.get('pesquisa')
+    
+    
+     #create cursor
+    cur = mysql.connection.cursor()
+
+    
+   
+    ####OBTER VALOR LATITUDE
+    #get latitude
+    resultlati = cur.execute("""SELECT latitude FROM comercio_food where codigo = %s """, [codigo])
+    resultlati = cur.fetchone()
+    for k, latitude in resultlati.items():
+        resultlati[k] = float(latitude)
+    resultlongi = cur.execute("""SELECT longitude FROM comercio_food where codigo = %s """, [codigo])
+    resultlongi = cur.fetchone()
+    for k, longitude in resultlongi.items():
+        resultlongi[k] = float(longitude)
+
+    
+    resultname = cur.execute("""SELECT name FROM comercio_food where codigo = %s """, [codigo])
+    resultname = cur.fetchone()    
+    for k, name in resultname.items():
+        resultname[k] = str(name)
+    
+    
+
+    ###Teste
+    result1 = 35.803788
+    result = -83.580553
+   
+    print("latitude:")
+    print(latitude)
+    print("longitude:")
+    print(longitude)
+    
+    folium_map = folium.Map(location=[latitude, longitude ],
+                            zoom_start=15,
+                            tiles="cartodbpositron",
+                            width='75%', 
+                            height='75%',
+                            position='relative',
+                            left='12.5%' 
+                            
+                            )
+    folium.Marker(
+    [latitude, longitude], popup=name
+    ).add_to(folium_map)
+      
+
+
+    folium_map.save('app/templates/mapa.html')
+
+
+    return render_template('comerciopesquisado.html', pesquisa=codigo)
+
 @app.route('/listagem' , methods=['POST'])
 def make_province_map():
 
@@ -142,6 +201,7 @@ def make_province_map():
 
 
     listagem()
+    
     estado = request.form.get('province11')
     print("Estado: ")
     print(estado)
