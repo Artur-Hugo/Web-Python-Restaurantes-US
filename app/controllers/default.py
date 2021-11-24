@@ -30,6 +30,7 @@ def listagem():
     #get articles
     result = cur.execute("SELECT * FROM comercio_food")
 
+
     conteudo = cur.fetchall()
 
     
@@ -182,7 +183,14 @@ def delecao(codigo=0):
     folium_map.save('app/templates/mapa.html')
 
 
-    return render_template('comerciopesquisado.html', pesquisa=codigo)
+     #get articles
+    cur.execute("SELECT * FROM comercio_food where codigo = %s ", [codigo])
+
+    conteudo = cur.fetchall()
+
+
+
+    return render_template('comerciopesquisado.html', pesquisa=codigo, conteudo=conteudo)
 
 @app.route('/listagem' , methods=['POST'])
 def make_province_map():
