@@ -4,8 +4,13 @@ from wtforms import Form, StringField , IntegerField, FloatField, validators
 
 
 
-class Pessoa(Form):
-    nome = StringField('nome',[validators.Length(min=1,max=50)])
-    idade = IntegerField('idade')
-    sexo = StringField('sexo',[validators.Length(min=1,max=1)])
-    salario = FloatField('salario')
+class Comercio(Form):
+    name = StringField('name',[validators.Length(min=1,max=50)])
+    address = StringField('address',[validators.Length(min=1,max=255)])
+    categories = StringField('categories',[validators.Length(min=1,max=255)])
+    city = StringField('city',[validators.Length(min=1,max=255)])
+    country = StringField('country',[validators.Length(min=1,max=255)])
+    latitude = FloatField('latitude')
+    longitude = FloatField('longitude')
+    postalCode = IntegerField('postalCode')
+    province = StringField('province',[validators.Length(min=1,max=255)])

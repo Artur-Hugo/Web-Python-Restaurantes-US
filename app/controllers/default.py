@@ -2,7 +2,7 @@ from flask import render_template, request
 from flask.helpers import send_file
 from app import app, db
 from flask_mysqldb import MySQL
-from app.models.tables import Pessoa
+from app.models.tables import Comercio
 import folium
 
 
@@ -84,25 +84,39 @@ def consulta():
 
 @app.route('/insercao')
 def insercao():
-    return render_template('insercao.html')
+
+    cur = mysql.connection.cursor()
+
+
+    #get articles
+    cur.execute("SELECT * FROM comercio_food")
+
+
+    conteudo = cur.fetchall()
+
+    return render_template('insercao.html',province=conteudo)
 
 
 @app.route('/salvar_insercao', methods=['POST'])
 
 def salvar_insercao():
-    form = Pessoa(request.form)
-    Nome = form.nome.data
-    Idade = form.idade.data
-    Sexo = form.sexo.data
-    Salario = form.salario.data
-
+    form = Comercio(request.form)
+    name = form.name.data
+    address = form.address.data
+    categories = form.categories.data
+    city = form.city.data
+    country = form.country.data
+    latitude = form.latitude.data
+    longitude = form.longitude.data
+    postalCode = form.postalCode.data
+    province = form.province.data
     
     
 
     cur = mysql.connection.cursor()
 
     #get articles
-    cur.execute("INSERT INTO pessoas(nome, idade, sexo, salario) VALUES(%s,%s,%s,%s)",(Nome, Idade, Sexo, Salario))
+    cur.execute("INSERT INTO pessoas(name, address, categories, city, country, latitude, longitude,postalCode, province) VALUES(%s,%s,%s,%s,%s, %d,%d, %d, %s)",(name, address, categories, city, country, latitude,longitude, postalCode, province))
 
     # commit to DB
     mysql.connection.commit()

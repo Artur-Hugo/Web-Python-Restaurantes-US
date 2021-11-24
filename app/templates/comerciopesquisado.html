@@ -11,7 +11,21 @@
     <title>Comercio</title>
 </head>
 <body>
-	<h2>{{pesquisa}}</h2>
+	<div class="container-fluid padding" style="background-color:rgb(248, 249, 250);"> 
+		<div class="row text-center padding ">
+			<div class="col-12">
+				<p>
+				
+				<img class="img-responsive center-block" src="../static/Imagens/enderecoazul-removebg.png" height= "200"; width = "156"; >
+				<p>
+					{% for comercio in conteudo %}
+					{{comercio.name}}
+					{% endfor %}
+				</p>
+				</p>
+			</div>
+		</div>
+		</div>
 
 {% include 'mapa.html' %}
 <ul class="container " >
@@ -46,7 +60,7 @@
 		<div class=" col-md-3">
 			<div style="display: flex; justify-content: center; margin: 50px;">
 
-			<img  src="../static/Imagens/endereco.png"height= "200"; width = "112";>
+			<img  src="../static/Imagens/enderecoazul-removebg.png"height= "200"; width = "112";>
 			<h1>Localizado</h1>
 
 			</div>
@@ -74,12 +88,12 @@
 
 		<div class="servico-content col-md-8" style="margin-top: 150px; margin-bottom: 100px;">
 			{% for comercio in conteudo %}
-				<h8 style = "font-size:12px; margin:60px; margin-top: 260px;">{{comercio.websites}}</h8>
+				<h8 style = "font-size:12px; margin:60px; margin-top: 260px;"><a href="{{comercio.websites}}">  {{comercio.websites}}</a></h8>
 			{% endfor %}
 		</div>
 
 		<div class=" servico-icon col-md-4">
-			<img src="../static/Imagens/websites.png"height= "400"; width = "312";>
+			<img src="../static/Imagens/enderecoazul.jpg"height= "400"; width = "312";>
 		</div>
 		
 	
