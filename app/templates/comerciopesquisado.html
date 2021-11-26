@@ -30,14 +30,14 @@
 {% include 'mapa.html' %}
 <ul class="container " >
 	<span class="border border-primary"></span>
-	<li class="servicos-item row col-md-12" >
+	<li class=" row col-md-12" >
 
-		<div class=" servico-icon col-md-6">
-			<img src="../static/Imagens/restaurante.png"height= "400"; width = "312";>
+		<div class=" col-md-6">
+			<img style = "font-size:80px; margin:60px; margin-left:170px; margin-top: 120px;" src="../static/Imagens/restaurante.png"height= "200"; width = "156";>
 		</div>
-		<div class="servico-content col-md-6">
+		<div class=" col-md-6">
 			{% for comercio in conteudo %}
-				<h1 style = "font-size:80px; margin:60px; margin-top: 160px;">{{comercio.name}}</h1>
+				<h1 style = "font-size:80px; margin:60px; margin-top: 120px;">{{comercio.name}}</h1>
 			{% endfor %}
 		</div>
 	
@@ -45,9 +45,9 @@
 
 
 
-	<li class="servicos-item row col-md-12 row" style="margin-top: 40px;" >
+	<li class=" col-md-12 row" style="margin-top: 40px;" >
 
-		<div class="justify-content-center servico-icon col-md-8" ">
+		<div class="justify-content-center  col-md-6" style = "font-size:80px; margin:60px; margin-top: 120px;">
 			{% for comercio in conteudo %}
 				<h1 >Endereço: {{comercio.address}}</h1>
 				<h2 style="margin-left: 13%;">Cidade: {{comercio.city}}</h2>
@@ -56,9 +56,9 @@
 			{% endfor %}
 		</div>
 
-		<div class=" col-md-2"></div>
-		<div class=" col-md-3">
-			<div style="display: flex; justify-content: center; margin: 50px;">
+		
+		<div class=" col-md-4">
+			<div   class="justify-content-center"  style = "font-size:80px; margin:20px; margin-top: 120px;">
 
 			<img  src="../static/Imagens/enderecoazul-removebg.png"height= "200"; width = "112";>
 			<h1>Localizado</h1>
@@ -71,10 +71,10 @@
 	</li>
 
 
-	<li class="servicos-item row col-md-12" >
+	<li class=" row col-md-12" >
 
-		<div class=" servico-icon col-md-6 " style="display: flex; justify-content: center;">
-			<img src="../static/Imagens/categories.png"height= "400"; width = "312";>
+		<div class=" col-md-6 " style="display: flex; justify-content: center; margin-top: 160px;">
+			<img src="../static/Imagens/categories.png"height= "200"; width = "156";>
 		</div>
 		<div class="servico-content col-md-6">
 			{% for comercio in conteudo %}
@@ -84,17 +84,20 @@
 	
 	</li>
 
-	<li class="servicos-item row col-md-12" >
+	<li class="col-md-12" style=" margin-bottom: 560px; margin-top: 120px;">
 
-		<div class="servico-content col-md-8" style="margin-top: 150px; margin-bottom: 100px;">
+
+		<div class="  col-md-12 justify-content-center" style="display:flex; justify-content: center; ">
+			<img src="../static/Imagens/websites.png"height= "200"; width = "156";>
+		</div>
+
+		<div class=" col-md-12 justify-content-center" style="display: flex; justify-content: center; margin-top: 10px;">
 			{% for comercio in conteudo %}
-				<h8 style = "font-size:12px; margin:60px; margin-top: 260px;"><a href="{{comercio.websites}}">  {{comercio.websites}}</a></h8>
+				<h8 style="width: 600px; display: flex; justify-content: center;" ><a href="{{comercio.websites}}">  {{comercio.websites}}</a></h8>
 			{% endfor %}
 		</div>
-
-		<div class=" servico-icon col-md-4">
-			<img src="../static/Imagens/enderecoazul.jpg"height= "400"; width = "312";>
-		</div>
+	</div>
+		
 		
 	
 	</li>

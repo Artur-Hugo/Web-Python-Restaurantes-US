@@ -36,3 +36,9 @@ li {
     
       
 }
+
+.ladoesquerdo{
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 2280px;
+}
