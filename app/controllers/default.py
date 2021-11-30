@@ -12,7 +12,7 @@ mysql = MySQL(app)
 
 app.config['MYSQL_HOST'] = 'us-cdbr-east-04.cleardb.com'
 app.config['MYSQL_USER'] = 'b6011ef164691f'
-
+app.config['MYSQL_PASSWORD'] = 'cf5067ed'
 app.config['MYSQL_NAME'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_DB'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -217,22 +217,22 @@ def make_province_map():
 
     conteudoProvince = cur.fetchall()
 
-    #get articles
-    result = cur.execute("SELECT * FROM comercio_food")
-
-    conteudo = cur.fetchall()
-
 
     listagem()
     
     estado = request.form.get('province11')
+    estadocomaspas = '%'+request.form.get('province11')+'%'
     print("Estado: ")
     print(estado)
     cur = mysql.connection.cursor()
 
+    cur.execute("select * from comercio_food where province like %s",[estadocomaspas])
+
+    conteudo = cur.fetchall()
+
     ####OBTER VALOR LATITUDE
     #get latitude
-    resultlati = cur.execute("SELECT latitude FROM comercio_food where codigo <= 5000 and province like %s",[estado])
+    resultlati = cur.execute("SELECT latitude FROM comercio_food where province like %s",[estado])
 
     resultlati = cur.fetchall()
 
@@ -249,7 +249,7 @@ def make_province_map():
 
     #####OBTER VALOR LONGITUDE
      #Lista de longitude
-    resultlong = cur.execute("SELECT longitude FROM comercio_food where codigo <= 5000 and province like %s",[estado])
+    resultlong = cur.execute("SELECT longitude FROM comercio_food where province like %s",[estado])
 
     resultlong = cur.fetchall()
 
@@ -267,7 +267,7 @@ def make_province_map():
 
     
     #Lista nome do Restaurante
-    resultname = cur.execute("SELECT name FROM comercio_food where codigo <= 5000 and province like %s",[estado])
+    resultname = cur.execute("SELECT name FROM comercio_food where province like %s",[estado])
    
     resultname = cur.fetchall()
 
@@ -334,17 +334,18 @@ def make_province_map():
                             left='12.5%' 
                             
                             )
-    folium.Marker(
-    [result1, result], popup="<i>Mt. Hood Meadows</i>"
-    ).add_to(folium_map)
-    folium.Marker(
-    [35.782339, -83.551408], popup="<b>Timberline Lodge</b>"
-    ).add_to(folium_map)
+    #folium.Marker(
+    #[result1, result], popup="<i>Mt. Hood Meadows</i>"
+    #).add_to(folium_map)
+    #folium.Marker(
+    #[35.782339, -83.551408], popup="<b>Timberline Lodge</b>"
+    #).add_to(folium_map)
 
 
     
 
     contador = -1
+    print(len(listaLongi))
     for i in listaLongi:
         contador += 1
         folium.Marker(
