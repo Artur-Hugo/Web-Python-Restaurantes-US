@@ -1,0 +1,23 @@
+<div class="container" style="align-content: center;">
+    <h2>Pesquisar Loja por Província</h2>
+        <form action="/teste22" (click)="listagem()" value="" method="POST" name="frm_province" class="ml-3">
+            <div class="form-group" style="align-content: center;">
+                <div class="row">
+
+                        
+                    
+                    <input type="text" class="form-control col-md-5" name="province11">
+                    Address:<input type="text" class="form-control col-md-5" name="address">
+                       CEP: <input type="text" class="form-control col-md-5" name="cep">
+                        <select class="form-control col-md-2" name="province12">
+                            
+                            {% for comercioProvincia in province %}
+                                <option nowrap="true" >{{comercioProvincia.province}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-success ml-4">Consultar</button>
+                </div>
+            </div>
+        </form>
+        <br><h4 style="text-align: center;">Pesquisa dos comercios na Provincia de : {{estado}}</h4><br>
+</div>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../static/css/comerciopesquisado.css" />
+   
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <title>Comercio</title>
+</head>
+<body>
+	<div class="container-fluid padding" style="background-color:rgb(248, 249, 250);"> 
+		<div class="row text-center padding ">
+			<div class="col-12">
+				<p>
+				
+				<img class="img-responsive center-block" src="../static/Imagens/enderecoazul-removebg.png" height= "200"; width = "156"; >
+				<p>
+					{% for comercio in conteudo %}
+					{{comercio.name}}
+					{% endfor %}
+				</p>
+				</p>
+			</div>
+		</div>
+		</div>
+
+{% include 'mapa.html' %}
+<ul class="container " >
+	<span class="border border-primary"></span>
+	<li class=" row col-md-12" >
+
+		<div class=" col-md-6">
+			<img style = "font-size:80px; margin:60px; margin-left:170px; margin-top: 120px;" src="../static/Imagens/restaurante.png"height= "200"; width = "156";>
+		</div>
+		<div class=" col-md-6">
+			{% for comercio in conteudo %}
+				<h1 style = "font-size:80px; margin:60px; margin-top: 120px;">{{comercio.name}}</h1>
+			{% endfor %}
+		</div>
+	
+	</li>
+
+
+
+	<li class=" col-md-12 row" style="margin-top: 40px;" >
+
+		<div class="justify-content-center  col-md-6" style = "font-size:80px; margin:60px; margin-top: 120px;">
+			{% for comercio in conteudo %}
+				<h1 >Endereço: {{comercio.address}}</h1>
+				<h2 style="margin-left: 13%;">Cidade: {{comercio.city}}</h2>
+				<h2 style="margin-left: 15%;">PostalCode: {{comercio.postalCode}}</h2>
+				<h3 style="margin-left: 8%;">Country: {{comercio.country}} ||| Provincia/Estado: {{comercio.province}}</h3>
+			{% endfor %}
+		</div>
+
+		
+		<div class=" col-md-4">
+			<div   class="justify-content-center"  style = "font-size:80px; margin:20px; margin-top: 120px;">
+
+			<img  src="../static/Imagens/enderecoazul-removebg.png"height= "200"; width = "112";>
+			<h1>Localizado</h1>
+
+			</div>
+
+
+		</div>
+
+	</li>
+
+
+	<li class=" row col-md-12" >
+
+		<div class=" col-md-6 " style="display: flex; justify-content: center; margin-top: 160px;">
+			<img src="../static/Imagens/categories.png"height= "200"; width = "156";>
+		</div>
+		<div class="servico-content col-md-6">
+			{% for comercio in conteudo %}
+				<h1 style = "font-size:80px; margin:60px; margin-top: 160px;">{{comercio.categories}}</h1>
+			{% endfor %}
+		</div>
+	
+	</li>
+
+	<li class="col-md-12" style=" margin-bottom: 560px; margin-top: 120px;">
+
+
+		<div class="  col-md-12 justify-content-center" style="display:flex; justify-content: center; ">
+			<img src="../static/Imagens/websites.png"height= "200"; width = "156";>
+		</div>
+
+		<div class=" col-md-12 justify-content-center" style="display: flex; justify-content: center; margin-top: 10px;">
+			{% for comercio in conteudo %}
+				<h8 style="width: 600px; display: flex; justify-content: center;" ><a href="{{comercio.websites}}">  {{comercio.websites}}</a></h8>
+			{% endfor %}
+		</div>
+	</div>
+		
+		
+	
+	</li>
+</ul>
+	
+
+	
+</body>
+</html>

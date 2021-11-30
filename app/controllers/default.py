@@ -10,10 +10,11 @@ app.debug = True
 
 mysql = MySQL(app)
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'restaurante'
+app.config['MYSQL_HOST'] = 'us-cdbr-east-04.cleardb.com'
+app.config['MYSQL_USER'] = 'b6011ef164691f'
+
+app.config['MYSQL_NAME'] = 'heroku_83a43c24789611f'
+app.config['MYSQL_DB'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 @app.route('/')

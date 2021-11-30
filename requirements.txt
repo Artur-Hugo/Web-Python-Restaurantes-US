@@ -1,0 +1,9 @@
+Flask-Migrate==2.7.0
+Flask==1.1.4
+flask-sqlalchemy
+flask-script
+folium
+mysql-connector-python
+flask_mysqldb
+wtforms
+gunicorn
