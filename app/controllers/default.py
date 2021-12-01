@@ -1,10 +1,13 @@
 from flask import render_template, request
 from flask.helpers import send_file
+from geopy.exc import GeocoderTimedOut
 from app import app, db
 from flask_mysqldb import MySQL
 from app.models.tables import Comercio
 import folium
-
+import pycep_correios
+from geopy.geocoders import Nominatim
+from pycep_correios import get_address_from_cep, WebService
 
 app.debug = True
 
@@ -359,7 +362,98 @@ def make_province_map():
     return render_template('listagem.html', estado=estado,restaurants=conteudo, province=conteudoProvince)
 
 
+@app.route('/teste')
+def testeTT():    
+    return render_template('teste.html')
 
+@app.route('/teste22',methods=['POST','GET'] )
+def teste_map():
+    
+    cep = request.form.get('cep')
+    print("CEP:")
+    print(cep)
+    address = request.form.get('address')
+    print("address:")
+    print(address)
+
+    #geolocator = Nominatim(user_agent="geolocalização")
+    #location = geolocator.geocode(address)
+    
+    #location = geolocator.geocode("R. Capote Valente, 39 - Pinheiros, São Paulo - SP, 05409-000")
+    #location = geolocator.geocode("R. Rui Boto de Souza, 102 - Jardim Aracati, São Paulo - SP, 04949-020")
+    #except ValueError:
+    locatilati = -23.5525439
+    locallongi = -46.6791195
+    #print(location)
+    
+    print(cep)
+    print("cep<<")
+
+
+    # R. Dragão do Mar, 81 - Praia de Iracema, Fortaleza - CE, 60060-390
+    # R. Capote Valente, Pinheiros - São Paulo
+    # R. Dragão do Mar, 81 - Praia de Iracema, Fortaleza - CE, 60060-390
+    geolocator = Nominatim(user_agent="geolocalização")
+    location = geolocator.geocode("Av. Vítor Manzini, 450 - Santo Amaro, São Paulo - SP, 04745-060")
+    print(location)
+    
+    #print(location.latitude)
+    
+    folium_map = folium.Map(location=[location.latitude, location.longitude ],
+                        zoom_start=15,
+                        tiles="cartodbpositron",
+                        width='50%', 
+                        height='50%',
+                        position='relative',
+                        left='12.5%' 
+                        
+                        )
+    folium.Marker(
+    [location.latitude, location.longitude], popup="<b>Timberline Lodge</b>"
+    ).add_to(folium_map)
+    
+
+
+    folium_map.save('app/templates/mapa.html')
+
+
+    
+
+    print("tratado:")
+    
+    
+    
+
+    
+    #print(location.longitude)
+    #if(address == None):
+    #    endereco = pycep_correios.get_address_from_cep(cep)
+
+    #    geolocator = Nominatim(user_agent="test_app")
+    #    location = geolocator.geocode(endereco['logradouro'] + ", " + endereco['cidade'] + " - " + endereco['bairro'])
+
+
+    
+    #print(location.latitude)
+
+    #folium_map = folium.Map(location=[location.latitude, location.longitude ],
+    #                        zoom_start=15,
+    #                        tiles="cartodbpositron",
+    #                        width='50%', 
+    #                        height='50%',
+    #                        position='relative',
+    #                        left='12.5%' 
+    #                        
+    #                        )
+    #folium.Marker(
+    #[location.latitude, location.latitude], popup="Nome"
+    #).add_to(folium_map)
+      
+
+
+    #folium_map.save('app/templates/mapa.html')
+
+    return render_template('insercao.html')
 
 class Lojas:
     def __init__(self, nome, latitude, longitude):

@@ -10,7 +10,7 @@
 	<meta http-equiv='cache-control' content='no-cache'>
 	<meta http-equiv='expires' content='0'>
 	<meta http-equiv='pragma' content='no-cache'>
-	<title>Inserção</title>
+	<title>Cadastrar Novo Restaurante</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark">
@@ -18,28 +18,40 @@
 			<li class="nav-item">
 				<a class="nav-link" href="/listagem">LISTAGEM</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/insercao">NOVO</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/graficos">GRAFICOS</a>
-			</li>
 		</ul>
 	</nav>
 	<br>
+	{% include 'mapa.html' %}
 	<div class="container">
-		<h2>Inserção</h2>
+		<h2>Cadastre o registro do Restaurante</h2>
+
+		<form action="/teste22" (click)="listagem()" value="" method="POST" name="frm_province" class="ml-3">
+            <div class="form-group" style="align-content: center;">
+                <div class="row">
+
+                        
+                    
+                
+                </div>
+            </div>
+        </form>
+		
+
 		<form action="/salvar_insercao" method="POST" name="frm_insercao" class="ml-3">
 			<div class="form-group">
 				<label for="name">Nome:</label>
 				<input type="text" class="form-control" name="name">
 			</div>
+
 			<div class="form-group">
-				<label for="address">Address:</label>
-				<input type="text" class="form-control" name="address" min="1" max="255">
+				
+				Rua/Avenida:<input type="text"  name="addressRua" min="1" max="255">
+				Numero:<input type="text"  name="addressNumero" min="1" max="255">
 			</div>
+			
+			
 			<div class="form-group">
-				<label for="categories">categories:</label>
+				<label for="categories">Categoria do restaurante:</label>
 				<input type="text" class="form-control" name="categories" min="1" max="255">
 			</div>
 			<div class="form-group">
@@ -50,6 +62,7 @@
 				<label for="country">País:(Apenas 2 digitos)</label>
 				<input type="text" class="form-control" name="country" maxlength="2">
 			</div>
+			<h3>Procure no google map o local da Latitude e Longitude e preencha </h3>
 			<div class="form-group">
 				<label for="latitude">Latitude:</label>
 				<input type="number" class="form-control" name="latitude" >
@@ -64,12 +77,10 @@
 			</div>
 
 			<div class="form-group">
-				<select class="form-control col-md-2" name="province11">
-                                
-					{% for comercioProvincia in province %}
-						<option nowrap="true" >{{comercioProvincia.province}}</option>
-					{% endfor %}
-				</select>
+				
+					<label for="province">Estado:(Apenas 2 digitos)</label>
+					<input type="text" class="form-control" name="province" maxlength="2">   
+				
 			</div>
 
 			<a href="/listagem" class="btn btn-secondary" role="button">Cancelar</a>
