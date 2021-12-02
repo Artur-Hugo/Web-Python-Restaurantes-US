@@ -15,7 +15,7 @@ mysql = MySQL(app)
 
 app.config['MYSQL_HOST'] = 'us-cdbr-east-04.cleardb.com'
 app.config['MYSQL_USER'] = 'b6011ef164691f'
-app.config['MYSQL_PASSWORD'] = 'cf5067ed'
+
 app.config['MYSQL_NAME'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_DB'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -114,14 +114,15 @@ def salvar_insercao():
     longitude = form.longitude.data
     postalCode = form.postalCode.data
     province = form.province.data
-    
+    websites = form.websites.data
+    print(name, address, categories, city,province, country, latitude,longitude, postalCode,  websites)
     
 
     cur = mysql.connection.cursor()
-
+    cur.execute("INSERT INTO comercio_food(name, address,  categories, city,province, country, latitude, longitude,postalCode, websites) VALUES(%s,%s,%s,%s,%s, %s,%s,%s, %s, %s)",(name, address, categories, city, province, country, latitude,longitude, postalCode, websites))
     #get articles
-    cur.execute("INSERT INTO pessoas(name, address, categories, city, country, latitude, longitude,postalCode, province) VALUES(%s,%s,%s,%s,%s, %d,%d, %d, %s)",(name, address, categories, city, country, latitude,longitude, postalCode, province))
-
+                                        
+    
     # commit to DB
     mysql.connection.commit()
     #close connection
@@ -454,10 +455,4 @@ def teste_map():
     #folium_map.save('app/templates/mapa.html')
 
     return render_template('insercao.html')
-
-class Lojas:
-    def __init__(self, nome, latitude, longitude):
-        self.nome = nome
-        self.latitude = latitude
-        self.longitude = longitude
 

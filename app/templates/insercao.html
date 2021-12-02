@@ -11,6 +11,14 @@
 	<meta http-equiv='expires' content='0'>
 	<meta http-equiv='pragma' content='no-cache'>
 	<title>Cadastrar Novo Restaurante</title>
+	<script>
+		function funcao1()
+		{
+		alert("Cadastro feito com Sucesso!");
+		}
+		</script>
+
+		
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark">
@@ -21,71 +29,63 @@
 		</ul>
 	</nav>
 	<br>
-	{% include 'mapa.html' %}
+	
 	<div class="container">
 		<h2>Cadastre o registro de um novo Restaurante</h2>
-
-		<form action="/teste22" (click)="listagem()" value="" method="POST" name="frm_province" class="ml-3">
+		
+		<form action="/salvar_insercao" (click)="listagem()" value="" method="POST" name="frm_province" class="ml-3">
             <div class="form-group" style="align-content: center;">
                 <div class="row">
 
                         
                     
-                
+                    <label for="address">Endereço:</label>
+                    <input type="text" class="form-control" name="address">
+					   
+					<label for="name">Nome:</label>
+					   <input type="text" class="form-control" name="name">
+
+					   <label for="categories">Categoria do restaurante:</label>
+				<input type="text" class="form-control" name="categories" min="1" max="255">
+
+					   
+                       
+						<label for="city">Cidade:</label>
+				<input type="text" class="form-control" name="city" min="1" max="225">
+				
+				<h4 style="margin-bottom:20px ;">Para Preencher a Latitude e Longitude pesquise no google map, preencha com no maximo 7 casas decimais para evitar falha </h4>
+				<br>
+
+					<label for="latitude">Latitude:</label>
+					<input type=number step=any class="form-control" name="latitude" maxlength="7" >
+				
+				
+					<label for="longitude">Longitude:</label>
+					<input type=number step=any class="form-control" name="longitude" maxlength="7">
+					
+
+					<label for="postalCode">PostalCode:</label>
+					<input type="number" class="form-control" name="postalCode">
+				
+					
+						<label for="province">Estado:(Apenas 2 digitos)</label>
+						<input type="text" class="form-control" name="province" maxlength="2">  
+						<label for="country">País:(Apenas 2 digitos)</label>
+						<input type="text" class="form-control" name="country" maxlength="2"> 
+					
+				
+					<label for="websites">Web site:</label>
+					<input type="text" class="form-control" name="websites" >
+					
+					<a href="/listagem" class="btn btn-secondary"  >Cancelar</a>
+					<button type="submit" class="btn btn-success ml-4">Inserir</button>
                 </div>
             </div>
         </form>
-		
 
-		<form action="/salvar_insercao" method="POST" name="frm_insercao" class="ml-3">
-			<div class="form-group">
-				<label for="name">Nome:</label>
-				<input type="text" class="form-control" name="name">
-			</div>
 
-			<div class="form-group">
-				
-				Rua/Avenida:<input type="text"  name="addressRua" min="1" max="255">
-				Numero:<input type="text"  name="addressNumero" min="1" max="255">
-			</div>
-			
-			
-			<div class="form-group">
-				<label for="categories">Categoria do restaurante:</label>
-				<input type="text" class="form-control" name="categories" min="1" max="255">
-			</div>
-			<div class="form-group">
-				<label for="city">Cidade:</label>
-				<input type="text" class="form-control" name="city" min="1" max="225">
-			</div>
-			<div class="form-group">
-				<label for="country">País:(Apenas 2 digitos)</label>
-				<input type="text" class="form-control" name="country" maxlength="2">
-			</div>
-			<h3>Procure no google map o local da Latitude e Longitude e preencha </h3>
-			<div class="form-group">
-				<label for="latitude">Latitude:</label>
-				<input type="number" class="form-control" name="latitude" >
-			</div>
-			<div class="form-group">
-				<label for="longitude">Longitude:</label>
-				<input type="number" class="form-control" name="longitude">
-			</div>
-			<div class="form-group">
-				<label for="postalCode">PostalCode:</label>
-				<input type="number" class="form-control" name="postalCode">
-			</div>
-
-			<div class="form-group">
-				
-					<label for="province">Estado:(Apenas 2 digitos)</label>
-					<input type="text" class="form-control" name="province" maxlength="2">   
-				
-			</div>
-
-			<a href="/listagem" class="btn btn-secondary" role="button">Cancelar</a>
-			<a  href="/listagem" type="submit" class="btn btn-success">Inserir</a>
-		</form>
 	</div>
+
+		
 </body>
 </html>
