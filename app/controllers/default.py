@@ -1,13 +1,10 @@
 from flask import render_template, request
 from flask.helpers import send_file
-from geopy.exc import GeocoderTimedOut
 from app import app, db
 from flask_mysqldb import MySQL
 from app.models.tables import Comercio
 import folium
-import pycep_correios
-from geopy.geocoders import Nominatim
-from pycep_correios import get_address_from_cep, WebService
+
 
 app.debug = True
 
@@ -15,7 +12,7 @@ mysql = MySQL(app)
 
 app.config['MYSQL_HOST'] = 'us-cdbr-east-04.cleardb.com'
 app.config['MYSQL_USER'] = 'b6011ef164691f'
-
+app.config['MYSQL_PASSWORD'] = 'cf5067ed'
 app.config['MYSQL_NAME'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_DB'] = 'heroku_83a43c24789611f'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
@@ -60,18 +57,26 @@ def selecao(id=0):
 
 @app.route('/consultar' , methods=['POST'])
 def consulta():
+
+     #create cursor
+    cur = mysql.connection.cursor()
+
+    cur.execute("select distinct province from comercio_food")
+
+    conteudoProvince = cur.fetchall()
+
     consulta = '%'+request.form.get('consulta')+'%'
     
     campo = request.form.get('campo')
 
-    cur = mysql.connection.cursor()
+    
 
     if campo == 'name':
         result = cur.execute("select * from comercio_food where name like %s",[consulta])
         result = cur.fetchall()
     elif campo == 'address':
         result = cur.execute("select * from comercio_food where address like %s",[consulta])
-        result = cur.cur.fetchall()
+        result = cur.fetchall()
     elif campo == 'city':
         result = cur.execute("select * from comercio_food where city like %s",[consulta])
         result = cur.fetchall()
@@ -82,7 +87,7 @@ def consulta():
         result = cur.execute("SELECT * FROM comercio_food")
     
 
-    return render_template('listagem.html', restaurants=result)
+    return render_template('listagem.html', restaurants=result,province=conteudoProvince)
 
 
 
@@ -363,96 +368,5 @@ def make_province_map():
     return render_template('listagem.html', estado=estado,restaurants=conteudo, province=conteudoProvince)
 
 
-@app.route('/teste')
-def testeTT():    
-    return render_template('teste.html')
 
-@app.route('/teste22',methods=['POST','GET'] )
-def teste_map():
-    
-    cep = request.form.get('cep')
-    print("CEP:")
-    print(cep)
-    address = request.form.get('address')
-    print("address:")
-    print(address)
-
-    #geolocator = Nominatim(user_agent="geolocalização")
-    #location = geolocator.geocode(address)
-    
-    #location = geolocator.geocode("R. Capote Valente, 39 - Pinheiros, São Paulo - SP, 05409-000")
-    #location = geolocator.geocode("R. Rui Boto de Souza, 102 - Jardim Aracati, São Paulo - SP, 04949-020")
-    #except ValueError:
-    locatilati = -23.5525439
-    locallongi = -46.6791195
-    #print(location)
-    
-    print(cep)
-    print("cep<<")
-
-
-    # R. Dragão do Mar, 81 - Praia de Iracema, Fortaleza - CE, 60060-390
-    # R. Capote Valente, Pinheiros - São Paulo
-    # R. Dragão do Mar, 81 - Praia de Iracema, Fortaleza - CE, 60060-390
-    geolocator = Nominatim(user_agent="geolocalização")
-    location = geolocator.geocode("Av. Vítor Manzini, 450 - Santo Amaro, São Paulo - SP, 04745-060")
-    print(location)
-    
-    #print(location.latitude)
-    
-    folium_map = folium.Map(location=[location.latitude, location.longitude ],
-                        zoom_start=15,
-                        tiles="cartodbpositron",
-                        width='50%', 
-                        height='50%',
-                        position='relative',
-                        left='12.5%' 
-                        
-                        )
-    folium.Marker(
-    [location.latitude, location.longitude], popup="<b>Timberline Lodge</b>"
-    ).add_to(folium_map)
-    
-
-
-    folium_map.save('app/templates/mapa.html')
-
-
-    
-
-    print("tratado:")
-    
-    
-    
-
-    
-    #print(location.longitude)
-    #if(address == None):
-    #    endereco = pycep_correios.get_address_from_cep(cep)
-
-    #    geolocator = Nominatim(user_agent="test_app")
-    #    location = geolocator.geocode(endereco['logradouro'] + ", " + endereco['cidade'] + " - " + endereco['bairro'])
-
-
-    
-    #print(location.latitude)
-
-    #folium_map = folium.Map(location=[location.latitude, location.longitude ],
-    #                        zoom_start=15,
-    #                        tiles="cartodbpositron",
-    #                        width='50%', 
-    #                        height='50%',
-    #                        position='relative',
-    #                        left='12.5%' 
-    #                        
-    #                        )
-    #folium.Marker(
-    #[location.latitude, location.latitude], popup="Nome"
-    #).add_to(folium_map)
-      
-
-
-    #folium_map.save('app/templates/mapa.html')
-
-    return render_template('insercao.html')
 
