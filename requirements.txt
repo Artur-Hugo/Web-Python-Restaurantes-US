@@ -9,4 +9,3 @@ wtforms
 gunicorn
 pycep_correios
 Nominatim
-GeocoderTimedOut
